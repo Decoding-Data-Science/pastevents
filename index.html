@@ -3,7 +3,25 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Past Events | Decoding Data Science</title>
+    <title>Workshop Recordings | Decoding Data Science</title>
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" href="https://raw.githubusercontent.com/Decoding-Data-Science/airesidency/main/dds-logo-removebg-preview.png">
+    
+    <!-- SEO & Social Media Metadata -->
+    <meta name="description" content="Access the knowledge vault of Decoding Data Science. Browse our complete history of AI Residency masterclasses and community workshop recordings since August 2025.">
+    <meta property="og:title" content="Workshop Recordings | Decoding Data Science">
+    <meta property="og:description" content="Access hands-on AI residency masterclasses and community workshop recordings. Learn LLMs, RAG, and Agentic AI.">
+    <meta property="og:image" content="https://raw.githubusercontent.com/Decoding-Data-Science/airesidency/main/dds-logo-removebg-preview.png">
+    <meta property="og:url" content="https://decodingdatascience.com">
+    <meta property="og:type" content="website">
+    
+    <!-- Twitter Card Metadata -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Workshop Recordings | Decoding Data Science">
+    <meta name="twitter:description" content="Access hands-on AI residency masterclasses and community workshop recordings.">
+    <meta name="twitter:image" content="https://raw.githubusercontent.com/Decoding-Data-Science/airesidency/main/dds-logo-removebg-preview.png">
+
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
     <style>
@@ -12,6 +30,8 @@
         .event-card:hover { transform: translateY(-4px); transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); }
         .gradient-bg { background: linear-gradient(135deg, #1e3a8a 0%, #3b82f6 100%); }
         .scroll-smooth { scroll-behavior: smooth; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+        .animate-fadeIn { animation: fadeIn 0.4s ease-out forwards; }
     </style>
 </head>
 <body class="text-gray-900 scroll-smooth">
@@ -55,7 +75,7 @@
     <!-- Header Section -->
     <header class="py-16 bg-white">
         <div class="max-w-7xl mx-auto px-6 text-center">
-            <h2 class="text-4xl md:text-5xl font-extrabold text-gray-900 mb-6 tracking-tight">Event Archives</h2>
+            <h2 class="text-4xl md:text-5xl font-extrabold text-gray-900 mb-6 tracking-tight">Workshop Recordings</h2>
             <p class="text-gray-500 max-w-2xl mx-auto text-lg font-medium">
                 Access the knowledge vault. From foundational LLM sessions to advanced Agentic AI orchestration, browse our complete history of events since August 2025.
             </p>
@@ -222,7 +242,7 @@
                                 <h3 class="text-lg font-bold mb-4 text-gray-800 leading-tight group-hover:text-blue-600 transition-colors">${event.title}</h3>
                                 <div class="space-y-3 text-sm font-medium text-gray-500">
                                     <p class="flex items-center gap-3"><i class="far fa-calendar-alt text-blue-500"></i> ${event.date}</p>
-                                    <p class="flex items-center gap-3"><i class="fas fa-video text-blue-500"></i> ${event.location}</p>
+                                    <p class="flex items-center gap-3"><i class="fas fa-video text-blue-500"></i> Online</p>
                                 </div>
                             </div>
                             <div class="p-6 pt-0">
