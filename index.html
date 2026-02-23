@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Past Events | Decoding Data Science</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap');
+        body { font-family: 'Inter', sans-serif; background-color: #f9fafb; }
+        .event-card:hover { transform: translateY(-4px); transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); }
+        .gradient-bg { background: linear-gradient(135deg, #1e3a8a 0%, #3b82f6 100%); }
+        .scroll-smooth { scroll-behavior: smooth; }
+    </style>
+</head>
+<body class="text-gray-900 scroll-smooth">
+
+    <!-- Top Promo Banner -->
+    <div id="promo-banner" class="gradient-bg text-white py-3 px-6 sticky top-0 z-50 shadow-lg">
+        <div class="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between gap-4">
+            <div class="flex items-center gap-3 text-center md:text-left">
+                <span class="bg-yellow-400 text-blue-900 font-bold px-2 py-0.5 rounded text-[10px] uppercase tracking-wider">Upcoming</span>
+                <p class="font-semibold text-sm">Join the next AI Agent Workshop — Limited Spots Available!</p>
+            </div>
+            <div class="flex items-center gap-6">
+                <div class="flex items-center gap-2 font-mono text-xl font-bold">
+                    <span id="timer-mins">30</span>:<span id="timer-secs">00</span>
+                </div>
+                <a href="https://nas.io/artificialintelligence/products?product=EVENT&tab=UPCOMING" target="_blank" class="bg-white text-blue-700 px-5 py-1.5 rounded-full font-bold text-xs hover:bg-gray-100 transition-all shadow-sm">
+                    Register Now
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Navigation -->
+    <nav class="bg-white border-b border-gray-100 py-4 shadow-sm">
+        <div class="max-w-7xl mx-auto px-6 flex justify-between items-center">
+            <div class="flex items-center gap-3">
+                <img src="https://raw.githubusercontent.com/Decoding-Data-Science/airesidency/main/dds-logo-removebg-preview.png" alt="DDS Logo" class="h-10 w-auto" onerror="this.src='https://via.placeholder.com/150?text=DDS+Logo'">
+                <div class="hidden sm:block border-l border-gray-200 pl-3">
+                    <h1 class="text-lg font-bold leading-none text-blue-900">Decoding Data Science</h1>
+                    <p class="text-[10px] text-gray-400 uppercase font-semibold tracking-tighter">AI Community & Residency</p>
+                </div>
+            </div>
+            <div class="flex gap-4 md:gap-8 text-sm font-semibold text-gray-600">
+                <a href="https://decodingdatascience.com" class="hover:text-blue-600 transition-colors">Home</a>
+                <a href="https://decodingdatascience.com/airesidency" class="hover:text-blue-600 transition-colors">Residency</a>
+                <a href="https://nas.io/aiguild" class="hover:text-blue-600 transition-colors">AI Guild</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Header Section -->
+    <header class="py-16 bg-white">
+        <div class="max-w-7xl mx-auto px-6 text-center">
+            <h2 class="text-4xl md:text-5xl font-extrabold text-gray-900 mb-6 tracking-tight">Event Archives</h2>
+            <p class="text-gray-500 max-w-2xl mx-auto text-lg font-medium">
+                Access the knowledge vault. From foundational LLM sessions to advanced Agentic AI orchestration, browse our complete history of events since August 2025.
+            </p>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="max-w-7xl mx-auto px-6 pb-24">
+        
+        <!-- Filter Tabs -->
+        <div class="flex flex-wrap justify-center gap-3 mb-12 border-b border-gray-100 pb-6">
+            <button onclick="filterEvents('all', this)" class="filter-btn px-6 py-2 rounded-full bg-blue-600 text-white font-bold text-sm transition-all shadow-md">All History</button>
+            <button onclick="filterEvents('residency', this)" class="filter-btn px-6 py-2 rounded-full bg-white text-gray-600 border border-gray-200 hover:border-blue-300 font-bold text-sm transition-all shadow-sm">AI Residency (MC)</button>
+            <button onclick="filterEvents('guild', this)" class="filter-btn px-6 py-2 rounded-full bg-white text-gray-600 border border-gray-200 hover:border-blue-300 font-bold text-sm transition-all shadow-sm">AI Guild Sessions</button>
+        </div>
+
+        <!-- Search Bar -->
+        <div class="max-w-md mx-auto mb-12 relative">
+            <input type="text" id="eventSearch" onkeyup="handleSearch()" placeholder="Search topics (e.g. RAG, Agents, LLM)..." class="w-full px-5 py-3 rounded-xl border border-gray-200 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all shadow-sm">
+            <i class="fas fa-search absolute right-4 top-4 text-gray-300"></i>
+        </div>
+
+        <!-- Events Grid -->
+        <div id="events-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            <!-- Populated by JavaScript -->
+        </div>
+
+        <!-- No Results -->
+        <div id="no-results" class="hidden text-center py-20">
+            <i class="fas fa-search text-gray-200 text-6xl mb-4"></i>
+            <p class="text-gray-500 font-medium">No events found matching your search.</p>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-[#0f172a] text-gray-400 py-16">
+        <div class="max-w-7xl mx-auto px-6 grid grid-cols-1 md:grid-cols-4 gap-12">
+            <div class="md:col-span-2">
+                <img src="https://raw.githubusercontent.com/Decoding-Data-Science/airesidency/main/dds-logo-removebg-preview.png" alt="DDS Logo" class="h-10 mb-6 brightness-200">
+                <p class="text-sm leading-relaxed max-w-sm">Leading the way in AI education and practical implementation. Join over 13.7K members building the future of intelligence.</p>
+                <div class="flex gap-4 mt-8">
+                    <a href="#" class="h-10 w-10 flex items-center justify-center rounded-lg bg-gray-800 hover:bg-blue-600 transition-colors"><i class="fab fa-linkedin-in text-white"></i></a>
+                    <a href="#" class="h-10 w-10 flex items-center justify-center rounded-lg bg-gray-800 hover:bg-red-600 transition-colors"><i class="fab fa-youtube text-white"></i></a>
+                    <a href="#" class="h-10 w-10 flex items-center justify-center rounded-lg bg-gray-800 hover:bg-sky-500 transition-colors"><i class="fab fa-twitter text-white"></i></a>
+                </div>
+            </div>
+            <div>
+                <h4 class="text-white font-bold mb-6 text-sm uppercase tracking-widest">Resources</h4>
+                <ul class="text-sm space-y-4 font-medium">
+                    <li><a href="https://decodingdatascience.com/airesidency" class="hover:text-blue-400 transition-colors">AI Residency Program</a></li>
+                    <li><a href="https://nas.io/aiguild" class="hover:text-blue-400 transition-colors">AI Guild Membership</a></li>
+                    <li><a href="https://nas.io/aiguild/digital-files/sgps" class="hover:text-blue-400 transition-colors">Digital Library</a></li>
+                </ul>
+            </div>
+            <div>
+                <h4 class="text-white font-bold mb-6 text-sm uppercase tracking-widest">Support</h4>
+                <ul class="text-sm space-y-4 font-medium">
+                    <li><a href="https://decodingdatascience.com" class="hover:text-blue-400 transition-colors">Contact Us</a></li>
+                    <li><a href="https://nas.io/artificialintelligence" class="hover:text-blue-400 transition-colors">Community Help</a></li>
+                    <li><a href="#" class="hover:text-blue-400 transition-colors">FAQs</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="max-w-7xl mx-auto px-6 mt-16 pt-8 border-t border-gray-800 flex flex-col md:flex-row justify-between items-center gap-4 text-xs font-semibold uppercase tracking-widest">
+            <span>&copy; 2026 Decoding Data Science.</span>
+            <span>Built for AI Builders & Professionals</span>
+        </div>
+    </footer>
+
+    <script>
+        // Full Event Data from August 2025 to Feb 2026
+        const rawEvents = [
+            // FEB 2026
+            { title: "Career Talk: Roadmap to Learn AI (Using AI Guild)", date: "Feb 22, 2026", location: "Online", price: "Free" },
+            { title: "MC06: Building LLM Wrappers, Function Calls, and Data Integration", date: "Feb 21, 2026", location: "Online", price: "$9.99" },
+            { title: "What is an LLM, and Selection", date: "Feb 21, 2026", location: "Online", price: "Free" },
+            { title: "OpenClaw Installation Options and Quick Start", date: "Feb 17, 2026", location: "Online", price: "Free" },
+            { title: "MC05: LLM configuration and How to select LLMs", date: "Feb 14, 2026", location: "Online", price: "$9.99" },
+            { title: "Agentic AI Orchestration + OpenClaw", date: "Feb 14, 2026", location: "Online", price: "Free" },
+            { title: "Founder Investors Connect", date: "Feb 13, 2026", location: "Dubai, UAE", price: "$29" },
+            { title: "MCP + Skills.md + OpenClaw: Build Better AI Agents", date: "Feb 10, 2026", location: "Online", price: "Free" },
+            { title: "MC04 — Intro to LLMs: How They Work + OpenAI Playground", date: "Feb 7, 2026", location: "Online", price: "$9.99" },
+            // JAN 2026
+            { title: "MC03: GROQ and Building Apps with APIs in Python", date: "Jan 31, 2026", location: "Online", price: "$9.99" },
+            { title: "Challenge Copilot: RAG Q&A Bot using LLM/API Integration", date: "Jan 31, 2026", location: "Online", price: "Free" },
+            { title: "MC02: What is Gen AI ? Application Architecture", date: "Jan 24, 2026", location: "Online", price: "$9.99" },
+            { title: "AI Residency Orientation", date: "Jan 17, 2026", location: "Online", price: "$4.99" },
+            { title: "RAG Build Lab: From Documents to a Working AI Assistant", date: "Jan 3, 2026", location: "Online", price: "$4.99" },
+            { title: "Roadmap in 2026 to learn Agentic AI", date: "Jan 3, 2026", location: "Online", price: "Free" },
+            // DEC 2025
+            { title: "Agentic AI 101: MCP, Tools, and Multi-Agent Systems", date: "Dec 27, 2025", location: "Online", price: "$4.99" },
+            { title: "Multi-Agentic Systems, Evaluations, and MCP", date: "Dec 14, 2025", location: "Online", price: "Free" },
+            { title: "MC16: Responsible AI, Next Steps Capstone Projects", date: "Dec 6, 2025", location: "Online", price: "$14.99" },
+            { title: "The power of LLM Wrappers | Q & A", date: "Dec 6, 2025", location: "Online", price: "Free" },
+            // NOV 2025
+            { title: "MC15: Multiagents using CrewAI", date: "Nov 29, 2025", location: "Online", price: "$14.99" },
+            { title: "Dawn of Agentic AI | Q & A", date: "Nov 29, 2025", location: "Online", price: "Free" },
+            { title: "MC14: Deep dive into Langchain", date: "Nov 22, 2025", location: "Online", price: "$14.99" },
+            { title: "MC13: Intro to Agents and Langchain", date: "Nov 15, 2025", location: "Online", price: "$14.99" },
+            { title: "MC12: Fine Tuning, ReACT Prompting and Intro to Agents", date: "Nov 8, 2025", location: "Online", price: "$14.99" },
+            { title: "MC11: Advanced RAG & LangChain", date: "Nov 2, 2025", location: "Online", price: "$14.99" },
+            // OCT 2025
+            { title: "MC10: Intro to Vector Embedding and Vector Database", date: "Oct 25, 2025", location: "Online", price: "$14.99" },
+            { title: "Ship Your Multi-Agent System Build, Orchestrate and Evaluate", date: "Oct 25, 2025", location: "Online", price: "Free" },
+            { title: "MC09: Llama Index: Retrieval-Augmented Generation (RAG)", date: "Oct 18, 2025", location: "Online", price: "$14.99" },
+            { title: "MC08: Hugging Face: Building an Open-Source Project", date: "Oct 11, 2025", location: "Online", price: "$14.99" },
+            { title: "MC07: Building LLM Wrappers, Function Calls, and Integration", date: "Oct 4, 2025", location: "Online", price: "$14.99" },
+            // SEPT 2025
+            { title: "MultiModal RAG Implementation (PDF With Text/Images)", date: "Sep 30, 2025", location: "Online", price: "$9.99" },
+            { title: "MC06: Generative AI Configuration Playground", date: "Sep 27, 2025", location: "Online", price: "$14.99" },
+            { title: "MC05: Deploy 1st App How ChatGPT Works", date: "Sep 20, 2025", location: "Online", price: "$14.99" },
+            { title: "MC04: Intro to LLM: How It Works Experiement", date: "Sep 13, 2025", location: "Online", price: "$14.99" },
+            { title: "MC03: GROQ and Building Apps with APIs", date: "Sep 6, 2025", location: "Online", price: "$14.99" },
+            { title: "MC12: Langchain Ecosystem and AI Agents", date: "Sep 6, 2025", location: "Online", price: "$14.99" },
+            // AUG 2025
+            { title: "MC 02: Application Architecture: UI, Git, and GitHub", date: "Aug 30, 2025", location: "Online", price: "$9.99" },
+            { title: "MC11: Finetuning and Chain of Thoughts", date: "Aug 30, 2025", location: "Online", price: "$9.99" },
+            { title: "Building MCP powered application from scratch", date: "Aug 30, 2025", location: "Online", price: "Free" },
+            { title: "MC 01: Basic Python and What is Gen AI?", date: "Aug 23, 2025", location: "Online", price: "$9.99" },
+            { title: "MC 10: Why Fine Tuning, Data Preprocessing", date: "Aug 23, 2025", location: "Online", price: "$9.99" },
+            { title: "Evaluating RAG Systems for Accuracy and Trust", date: "Aug 19, 2025", location: "Online", price: "$9.99" },
+            { title: "MC09: Intro to Vector Embedding and RAG", date: "Aug 16, 2025", location: "Online", price: "$9.99" },
+            { title: "MC08: Llama Index: RAG Masterclass", date: "Aug 9, 2025", location: "Online", price: "$9.99" },
+            { title: "Creating AI Financial Market Assistant Using AI Agents", date: "Aug 5, 2025", location: "Online", price: "$9.99" },
+            { title: "MC07: Hugging Face Open-Source Project", date: "Aug 2, 2025", location: "Online", price: "$19" }
+        ];
+
+        let currentCategory = 'all';
+
+        function renderEvents(category = 'all', searchTerm = '') {
+            const grid = document.getElementById('events-grid');
+            const noResults = document.getElementById('no-results');
+            grid.innerHTML = '';
+            
+            const filtered = rawEvents.filter(event => {
+                const isMC = event.title.includes('MC') || event.title.includes('Masterclass');
+                const matchesCategory = (category === 'all') || 
+                                       (category === 'residency' && isMC) || 
+                                       (category === 'guild' && !isMC);
+                const matchesSearch = event.title.toLowerCase().includes(searchTerm.toLowerCase());
+                return matchesCategory && matchesSearch;
+            });
+
+            if (filtered.length === 0) {
+                noResults.classList.remove('hidden');
+            } else {
+                noResults.classList.add('hidden');
+                filtered.forEach(event => {
+                    const isResidency = event.title.includes('MC');
+                    const recordingLink = isResidency 
+                        ? "https://decodingdatascience.com/airesidency" 
+                        : "https://nas.io/aiguild/digital-files/sgps";
+                    
+                    const typeLabel = isResidency ? "AI Residency" : "AI Guild";
+                    const typeClass = isResidency ? "bg-indigo-100 text-indigo-700" : "bg-emerald-100 text-emerald-700";
+
+                    const card = `
+                        <div class="event-card bg-white rounded-2xl border border-gray-100 shadow-sm overflow-hidden flex flex-col h-full animate-fadeIn">
+                            <div class="p-6 flex-grow">
+                                <div class="flex justify-between items-center mb-5">
+                                    <span class="text-[10px] uppercase tracking-widest font-black px-2.5 py-1 rounded-md ${typeClass}">${typeLabel}</span>
+                                    <span class="text-xs font-bold text-gray-400 bg-gray-50 px-2 py-1 rounded">${event.price}</span>
+                                </div>
+                                <h3 class="text-lg font-bold mb-4 text-gray-800 leading-tight group-hover:text-blue-600 transition-colors">${event.title}</h3>
+                                <div class="space-y-3 text-sm font-medium text-gray-500">
+                                    <p class="flex items-center gap-3"><i class="far fa-calendar-alt text-blue-500"></i> ${event.date}</p>
+                                    <p class="flex items-center gap-3"><i class="fas fa-video text-blue-500"></i> ${event.location}</p>
+                                </div>
+                            </div>
+                            <div class="p-6 pt-0">
+                                <a href="${recordingLink}" target="_blank" class="w-full flex items-center justify-center gap-2 bg-gray-50 border border-gray-200 py-3 rounded-xl text-blue-700 font-bold text-sm hover:bg-blue-600 hover:text-white hover:border-blue-600 transition-all group">
+                                    Watch Recording
+                                    <i class="fas fa-play-circle text-lg group-hover:scale-110 transition-transform"></i>
+                                </a>
+                            </div>
+                        </div>
+                    `;
+                    grid.innerHTML += card;
+                });
+            }
+        }
+
+        function filterEvents(cat, btn) {
+            currentCategory = cat;
+            document.querySelectorAll('.filter-btn').forEach(b => {
+                b.classList.remove('bg-blue-600', 'text-white', 'shadow-md');
+                b.classList.add('bg-white', 'text-gray-600', 'border', 'shadow-sm');
+            });
+            btn.classList.add('bg-blue-600', 'text-white', 'shadow-md');
+            btn.classList.remove('bg-white', 'text-gray-600', 'border', 'shadow-sm');
+            renderEvents(cat, document.getElementById('eventSearch').value);
+        }
+
+        function handleSearch() {
+            const term = document.getElementById('eventSearch').value;
+            renderEvents(currentCategory, term);
+        }
+
+        // Countdown Timer
+        let timeLeft = 30 * 60;
+        function updateTimer() {
+            const mins = Math.floor(timeLeft / 60);
+            const secs = timeLeft % 60;
+            document.getElementById('timer-mins').textContent = mins.toString().padStart(2, '0');
+            document.getElementById('timer-secs').textContent = secs.toString().padStart(2, '0');
+            if (timeLeft > 0) timeLeft--; else timeLeft = 1800;
+        }
+
+        window.onload = () => {
+            renderEvents();
+            setInterval(updateTimer, 1000);
+        };
+    </script>
+</body>
+</html>
